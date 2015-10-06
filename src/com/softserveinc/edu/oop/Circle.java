@@ -7,7 +7,7 @@ public class Circle extends PlaneFigure {
 		if (radius > 0) {
 			this.radius = radius;
 		} else
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("radius is less than or equal 0");
 	}
 
 	public double getRadius() {
