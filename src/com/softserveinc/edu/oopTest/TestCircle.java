@@ -14,12 +14,12 @@ public class TestCircle {
 	Circle[] circles = new Circle[4];
 	final double[] radius = { -1, 0, 1, 1000 };
 
-//	@Before
-//	public void setUp() throws Exception {
-//		for (int i = 1; i < circles.length; i++) {
-//			circles[i] = new Circle(radius[i]);
-//		}
-//	}
+	@Before
+	public void setUp() throws Exception {
+		for (int i = 1; i < circles.length; i++) {
+			circles[i] = new Circle(radius[i]);
+		}
+	}
 	
 	 @Rule
 	 public ExpectedException thrown= ExpectedException.none();
