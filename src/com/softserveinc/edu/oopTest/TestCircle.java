@@ -2,60 +2,69 @@ package com.softserveinc.edu.oopTest;
 
 import static org.junit.Assert.*;
 
-import org.junit.rules.ExpectedException;
-
 import org.junit.*;
 
 import com.softserveinc.edu.oop.Circle;
 
-
 public class TestCircle {
-
-	Circle[] circles = new Circle[4];
-	final double[] radius = { -1, 0, 1, 1000 };
+	Circle circle;
+	double radius = 10;
+	double precision = 0.001;
 
 	@Before
-	public void setUp() throws Exception {
-		for (int i = 1; i < circles.length; i++) {
-			circles[i] = new Circle(radius[i]);
-		}
+	public void setUp() {
+		circle = new Circle(radius);
+		assertTrue(circle != null);
 	}
-	
-	 @Rule
-	 public ExpectedException thrown= ExpectedException.none();
 
-	
-	@Test
-	public void testempty() { 
-		circles[3] = new Circle(radius[3]);
-		assertTrue(circles[3] != null);
-		thrown.expect(IndexOutOfBoundsException.class);
-        throw new IndexOutOfBoundsException(); 
+	@After
+	public void tearDown() {
+		circle = null;
+		assertTrue(circle == null);
 	}
-	
-//	@Test(expected = ArithmeticException.class)  
-//	public void testdivisionWithException() {
-//		circles[3] = new Circle(radius[3]);
-//		assertTrue(circles[3] != null);
-////	  int i = 1/0;
-//		throw new ArithmeticException();
-//	}
-	
-	
+
+	public void testConstructor() {
+		Circle circle2 = new Circle(1);
+		assertTrue(circle2 != null);
+	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void testConstructor() {
-		for (int i = 0; i < 2; i++) {
-			circles[i] = new Circle(radius[i]);
-			assertTrue(circles[i] == null);
-		}
+	public void testConstructorIllegalArgument() {
+		Circle circle2 = new Circle(-1);
+		assertTrue(circle2 == null);
 	}
-
-
-//	@Test
-//	public void testGetSquare() {
-//		for (int i = 1; i < circles.length; i++) {
-//			assertEquals(Math.PI * Math.pow(radius[i], 2), circles[i].getSquare());
-//		}
-//	}
+	
+	@Test
+	public void testGetRadius() {
+		assertEquals(radius, circle.getRadius(), precision);
+	}
+	
+	 @Test
+	 public void testSetRadius() {
+		 double radius = 20;
+		 circle.setRadius(radius);
+		 assertEquals(radius, circle.getRadius(), precision);
+	 }
+	 
+	 @Test
+	 public void testGetSquare() {
+		 assertEquals(Math.PI * Math.pow(radius,2), circle.getSquare(), precision);
+	 }
+	 
+	 @Test
+	 public void testHashCode() {
+		 Circle circle2 = new Circle(2);
+		 assertFalse(circle.hashCode() == circle2.hashCode());
+	 }
+	 
+	 @Test
+	 public void testEquals() {
+		 Circle circle2 = new Circle(radius);
+		 Circle circle3 = new Circle(3);
+		 assertTrue(circle.equals(circle));
+		 assertFalse(circle.equals(null));
+		 assertFalse(circle.equals(new Double(2)));
+		 assertFalse(circle.equals(circle3));
+		 assertTrue(circle.equals(circle2));
+	 }
 }
