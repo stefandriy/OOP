@@ -1,5 +1,6 @@
 package com.softserveinc.edu.oopTest;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -8,26 +9,97 @@ import com.softserveinc.edu.oop.Triangle;
 import junit.framework.TestCase;
 
 public class TestTriangle extends TestCase {
-
-	Triangle[] triangles = new Triangle[4];
-	double[] sideA = { 2, 4, 6, 8 };
-	double[] sideB = { 1, 3, 5, 7 };
-	double[] sideC = { -1, 0, 2, 10 };
+	Triangle triangle;
+	double sideA = 3, sideB = 4, sideC = 5;
+	double precision = 0.001;
 
 	@Before
-	protected void setUp() throws Exception {
-		for (int i = 0; i < triangles.length; i++) {
-			triangles[i] = new Triangle(sideA[i], sideB[i], sideC[i]);
-		}
+	public void setUp() {
+		triangle = new Triangle(sideA, sideB, sideC);
+		assertTrue(triangle != null);
+	}
+
+	@After
+	public void tearDown() {
+		triangle = null;
+		assertTrue(triangle == null);
+	}
+
+	public void testConstructor() {
+		Triangle triangle2 = new Triangle(3, 4, 5);
+		assertTrue(triangle2 != null);
+	}
+
+//	@Test(expected = IllegalArgumentException.class)
+	public void testConstructorNegativeArgument() {
+		Triangle triangle2 = new Triangle(-1, -2, 0);
+		assertTrue(triangle2 == null);
+//		throw new IllegalArgumentException();
+	}
+
+//	@Test(expected = IllegalArgumentException.class)
+	public void testConstructorIllegalArgument() {
+		Triangle triangle2 = new Triangle(6, 3, 3);
+		assertTrue(triangle2 == null);
 	}
 
 	@Test
-	public void test() {
-		for (int i = 0; i < triangles.length; i++) {
-			double p = (sideA[i] + sideB[i] + sideC[i]) / 2;
-			assertEquals(Math.sqrt(p * (p - sideA[i]) * (p - sideB[i]) * (p - sideC[i])),
-					triangles[i].getSquare());
-		}
+	public void testGetSideA() {
+		assertEquals(sideA, triangle.getSideA(), precision);
 	}
 
+	@Test
+	public void testGetSideB() {
+		assertEquals(sideB, triangle.getSideB(), precision);
+	}
+
+	@Test
+	public void testGetSideC() {
+		assertEquals(sideC, triangle.getSideC(), precision);
+	}
+
+	@Test
+	public void testSetSideA() {
+		double newSide = 20;
+		triangle.setSideA(newSide);
+		assertEquals(newSide, triangle.getSideA(), precision);
+	}
+
+	@Test
+	public void testSetSideB() {
+		double newSide = 20;
+		triangle.setSideB(newSide);
+		assertEquals(newSide, triangle.getSideB(), precision);
+	}
+
+	@Test
+	public void testSetSideC() {
+		double newSide = 20;
+		triangle.setSideC(newSide);
+		assertEquals(newSide, triangle.getSideC(), precision);
+	}
+
+	@Test
+	public void testGetSquare() {
+		double p = (sideA + sideB + sideC) / 2;
+		double expected = p * (p - sideA) * (p - sideB) * (p - sideC);
+		assertEquals(expected, triangle.getSquare(), precision);
+	}
+
+	@Test
+	public void testHashCode() {
+		Triangle triangle2 = new Triangle(3, 4, 5);
+		assertFalse(triangle.hashCode() == triangle2.hashCode());
+	}
+
+	@Test
+	public void testEquals() {
+		Triangle triangle2 = new Triangle(sideA, sideB, sideC);
+		Triangle triangle3 = new Triangle(3, 4, 5);
+		assertTrue(triangle.equals(triangle));
+		assertFalse(triangle.equals(null));
+		assertFalse(triangle.equals(new Double(2)));
+		assertFalse(triangle.equals(triangle3));
+		assertTrue(triangle.equals(triangle2));
+	}
 }
