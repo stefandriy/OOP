@@ -50,4 +50,30 @@ public class Triangle extends PlaneFigure {
 	public void setSideC(double sideC) {
 		this.sideC = sideC;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Triangle triangle = (Triangle) o;
+
+		if (Double.compare(triangle.sideA, sideA) != 0) return false;
+		if (Double.compare(triangle.sideB, sideB) != 0) return false;
+		return Double.compare(triangle.sideC, sideC) == 0;
+
+	}
+
+	@Override
+	public int hashCode() {
+		int result;
+		long temp;
+		temp = Double.doubleToLongBits(sideA);
+		result = (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(sideB);
+		result = 31 * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(sideC);
+		result = 31 * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
 }

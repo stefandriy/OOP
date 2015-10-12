@@ -10,7 +10,7 @@ import junit.framework.TestCase;
 
 public class TestTriangle extends TestCase {
 	Triangle triangle;
-	double sideA = 3, sideB = 4, sideC = 5;
+	double sideA = 7, sideB = 8, sideC = 10;
 	double precision = 0.001;
 
 	@Before
@@ -30,14 +30,14 @@ public class TestTriangle extends TestCase {
 		assertTrue(triangle2 != null);
 	}
 
-//	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void testConstructorNegativeArgument() {
 		Triangle triangle2 = new Triangle(-1, -2, 0);
 		assertTrue(triangle2 == null);
-//		throw new IllegalArgumentException();
+		throw new IllegalArgumentException();
 	}
 
-//	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void testConstructorIllegalArgument() {
 		Triangle triangle2 = new Triangle(6, 3, 3);
 		assertTrue(triangle2 == null);
@@ -82,7 +82,7 @@ public class TestTriangle extends TestCase {
 	@Test
 	public void testGetSquare() {
 		double p = (sideA + sideB + sideC) / 2;
-		double expected = p * (p - sideA) * (p - sideB) * (p - sideC);
+		double expected = Math.sqrt(p * (p - sideA) * (p - sideB) * (p - sideC));
 		assertEquals(expected, triangle.getSquare(), precision);
 	}
 
