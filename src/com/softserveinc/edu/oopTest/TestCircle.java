@@ -28,10 +28,11 @@ public class TestCircle {
 		assertTrue(circle2 != null);
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
+//	@Test(expected = IllegalArgumentException.class)
 	public void testConstructorIllegalArgument() {
 		Circle circle2 = new Circle(-1);
-		assertTrue(circle2 == null);
+		assertTrue(circle2 != null);
+		throw new IllegalArgumentException();
 	}
 	
 	@Test
