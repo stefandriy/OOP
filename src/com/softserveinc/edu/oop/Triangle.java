@@ -66,6 +66,7 @@ public class Triangle extends PlaneFigure {
 
         Triangle triangle = (Triangle) o;
 
+        if (id != triangle.id) return false;
         if (Double.compare(triangle.sideA, sideA) != 0) return false;
         if (Double.compare(triangle.sideB, sideB) != 0) return false;
         return Double.compare(triangle.sideC, sideC) == 0;
@@ -76,8 +77,9 @@ public class Triangle extends PlaneFigure {
     public int hashCode() {
         int result;
         long temp;
+        result = id;
         temp = Double.doubleToLongBits(sideA);
-        result = (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(sideB);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(sideC);

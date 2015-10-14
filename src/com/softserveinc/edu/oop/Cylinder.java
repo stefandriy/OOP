@@ -47,16 +47,21 @@ public class Cylinder extends SolidFigure {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Cylinder cylinder = (Cylinder) o;
+
+        if (id != cylinder.id) return false;
         if (Double.compare(cylinder.height, height) != 0) return false;
-        return figure.equals(cylinder.figure);
+        return !(figure != null ? !figure.equals(cylinder.figure) : cylinder.figure != null);
+
     }
 
     @Override
     public int hashCode() {
         int result;
         long temp;
-        result = figure.hashCode();
+        result = id;
+        result = 31 * result + (figure != null ? figure.hashCode() : 0);
         temp = Double.doubleToLongBits(height);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;

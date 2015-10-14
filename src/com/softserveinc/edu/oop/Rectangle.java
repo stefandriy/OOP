@@ -46,6 +46,7 @@ public class Rectangle extends PlaneFigure {
 
         Rectangle rectangle = (Rectangle) o;
 
+        if (id != rectangle.id) return false;
         if (Double.compare(rectangle.width, width) != 0) return false;
         return Double.compare(rectangle.height, height) == 0;
 
@@ -55,8 +56,9 @@ public class Rectangle extends PlaneFigure {
     public int hashCode() {
         int result;
         long temp;
+        result = id;
         temp = Double.doubleToLongBits(width);
-        result = (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(height);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
